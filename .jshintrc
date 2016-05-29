@@ -1,0 +1,19 @@
+{
+  "boss": true,
+  "camelcase": true,
+  "curly": true,
+  "eqeqeq": true,
+  "eqnull": true,
+  "funcscope": true,
+  "indent": 2,
+  "lastsemic": true,
+  "latedef": true,
+  "maxlen": 80,
+  "newcap": true,
+  "quotmark": "single",
+  "trailing": true,
+  "undef": true,
+  "unused": true,
+  "esnext": true,
+  "node": true
+}
