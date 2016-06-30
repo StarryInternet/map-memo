@@ -1,5 +1,6 @@
-map-memo
-===
+# map-memo
+
+![Codeship badge](https://codeship.com/projects/dd6eb2b0-20fe-0134-23d7-6a7a2fea738b/status?branch=master)
 
 Generic memoization using `Map` and `WeakMap`.
 
