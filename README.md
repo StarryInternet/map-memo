@@ -56,6 +56,6 @@ console.log( mem() );
 console.log( mem() ); // Same value as above
 
 setTimeout( function() {
-  console.log( mem() );
-}, 1001 ); // Different value
+  console.log( mem() ); // Different value
+}, 1001 );
 ```
