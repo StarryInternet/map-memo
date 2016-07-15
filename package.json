@@ -1,6 +1,6 @@
 {
   "name": "map-memo",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Generic memoization with Map and WeakMap",
   "author": "Kevin Ennis <kennis84@gmail.com",
   "scripts": {
