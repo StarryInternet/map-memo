@@ -39,3 +39,23 @@ let mem = memoize( loop );
 console.log( mem( Math.sqrt, 1e9 ) ); // slow
 console.log( mem( Math.sqrt, 1e9 ) ); // fast!
 ```
+
+### Example with expire time in milliseconds
+
+```js
+'use strict';
+
+const memoize = require('map-memo');
+
+function getRandom() {
+  return Math.random();
+}
+
+let mem = memoize( getRandom, { ttl: 1000 } );
+console.log( mem() );
+console.log( mem() ); // Same value as above
+
+setTimeout( function() {
+  console.log( mem() ); // Different value
+}, 1001 );
+```

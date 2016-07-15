@@ -130,4 +130,21 @@ describe( 'memoize', () => {
     assert.equal( first, second, 'Cached result is incorrect' );
   });
 
+  it( 'should expire an element after a ttl' , done => {
+    let fn = function() {
+      return Math.random();
+    }
+    let mem = memoize( fn, { ttl: 10 } );
+
+    let first = mem();
+    let second = mem();
+    assert.equal( first, second );
+
+    setTimeout( function() {
+      let newFirst = mem();
+
+      assert.notEqual( first, newFirst );
+      done();
+    }, 11 );
+  });
 });
