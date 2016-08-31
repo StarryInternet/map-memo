@@ -59,3 +59,30 @@ setTimeout( function() {
   console.log( mem() ); // Different value
 }, 1001 );
 ```
+
+### Example with asynchronous function
+
+```js
+'use strict';
+
+const memoize = require('map-memo');
+
+function loopAsync( fn, n ) {
+  return new Promise( ( resolve, reject ) => {
+    let v;
+
+    for ( let i = 0; i < n; ++i ) {
+      v = fn( i );
+    }
+
+    resolve( v );
+  });
+}
+
+let mem = memoize( loopAsync );
+
+mem( Math.sqrt, 1e9 ).then( result => {
+  console.log( result ); // slow
+  mem( Math.sqrt, 1e9 ).then( console.log ); // fast!
+});
+```
