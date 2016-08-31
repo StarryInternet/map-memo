@@ -147,4 +147,29 @@ describe( 'memoize', () => {
       done();
     }, 11 );
   });
+
+  it( 'should work with promises', done => {
+    let calls = 0;
+    let result;
+
+    function fn() {
+      calls++;
+      return Promise.resolve( result = {} );
+    }
+
+    let mem = memoize( fn, { async: true } );
+
+    let first;
+    let second;
+
+    mem('foo').then( res => first = result )
+    .then( () => mem('foo').then( res => second = result ) )
+    .then( () => {
+      assert.equal( first, result, 'Incorrect result was returned' );
+      assert.equal( calls, 1, 'Result was not cached' );
+      assert.equal( first, second, 'Cached result is incorrect' );
+      done();
+    })
+    .catch( done );
+  });
 });
