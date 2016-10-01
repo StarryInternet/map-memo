@@ -6,6 +6,14 @@ Generic memoization using `Map` and `WeakMap`.
 
 ---
 
+### Installing
+
+```
+npm install --save map-memo
+```
+
+---
+
 ### What/Why?
 
 Memoization in JavaScript has typically been limited to arguments
