@@ -1,6 +1,7 @@
 'use strict';
 
 const assert = require('assert');
+const sinon = require('sinon');
 const memoize = require('../lib/map-memo');
 
 // sample types
@@ -173,7 +174,8 @@ describe( 'memoize', () => {
     .catch( done );
   });
 
-  it( 'should work with dynamic getter for ttl', done => {
+  it( 'should work with dynamic getter for ttl', () => {
+    const clock = sinon.useFakeTimers();
     let toggle = false;
 
     let count = 0;
@@ -193,26 +195,20 @@ describe( 'memoize', () => {
     assert.equal( count, 1 );
 
     // first cache save will expire after 10ms
-    setTimeout( () => {
-      mem('foo');
-      assert.equal( count, 2 );
-      mem('foo');
-      assert.equal( count, 2 );
+    clock.tick( 20 );
+    mem('foo');
+    assert.equal( count, 2 );
+    mem('foo');
+    assert.equal( count, 2 );
 
-      // prove that 2nd cache save ttl is longer than initial 10ms ttl
-      setTimeout( () => {
-        mem('foo');
-        assert.equal( count, 2 );
-      }, 20 );
+    // prove that 2nd cache save ttl is longer than initial 10ms ttl
+    clock.tick( 20 );
+    mem('foo');
+    assert.equal( count, 2 );
 
-      // prove that 2nd cache save ttl is 200ms
-      setTimeout( () => {
-        mem('foo');
-        assert.equal( count, 3 );
-        done();
-      }, 210 );
-
-    }, 20 );
-
+    // prove that 2nd cache save ttl is 200ms
+    clock.tick( 210 );
+    mem('foo');
+    assert.equal( count, 3 );
   });
 });
