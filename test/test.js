@@ -172,4 +172,47 @@ describe( 'memoize', () => {
     })
     .catch( done );
   });
+
+  it( 'should work with dynamic getter for ttl', done => {
+    let toggle = false;
+
+    let count = 0;
+    const fn = () => count += 1;
+
+    const mem = memoize( fn, {
+      get ttl() {
+        // ttl will be 10ms on first invocation
+        return toggle = !toggle ? 10 : 200;
+      }
+    });
+
+    assert.equal( count, 0 );
+    mem('foo');
+    assert.equal( count, 1 );
+    mem('foo');
+    assert.equal( count, 1 );
+
+    // first cache save will expire after 10ms
+    setTimeout( () => {
+      mem('foo');
+      assert.equal( count, 2 );
+      mem('foo');
+      assert.equal( count, 2 );
+
+      // prove that 2nd cache save ttl is longer than initial 10ms ttl
+      setTimeout( () => {
+        mem('foo');
+        assert.equal( count, 2 );
+      }, 20 );
+
+      // prove that 2nd cache save ttl is 200ms
+      setTimeout( () => {
+        mem('foo');
+        assert.equal( count, 3 );
+        done();
+      }, 210 );
+
+    }, 20 );
+
+  });
 });
