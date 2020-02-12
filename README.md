@@ -9,7 +9,7 @@ Generic memoization using `Map` and `WeakMap`.
 ### Installing
 
 ```
-npm install --save map-memo
+npm install --save @starryinternet/map-memo
 ```
 
 ---
@@ -30,7 +30,7 @@ argument types.
 ```js
 'use strict';
 
-const memoize = require('map-memo');
+const memoize = require('@starryinternet/map-memo');
 
 function loop( fn, n ) {
   let v;
@@ -53,7 +53,7 @@ console.log( mem( Math.sqrt, 1e9 ) ); // fast!
 ```js
 'use strict';
 
-const memoize = require('map-memo');
+const memoize = require('@starryinternet/map-memo');
 
 function getRandom() {
   return Math.random();
@@ -73,7 +73,7 @@ setTimeout( function() {
 ```js
 'use strict';
 
-const memoize = require('map-memo');
+const memoize = require('@starryinternet/map-memo');
 
 function loopAsync( fn, n ) {
   return new Promise( ( resolve, reject ) => {
